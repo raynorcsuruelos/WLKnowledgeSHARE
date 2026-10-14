@@ -1,0 +1,6 @@
+{
+  "name": "WL Tool FAQs - Kuwait",
+  "description": "Hardened Wireline Tool FAQs with salted SHA-256 credentials, CSV bulk import/export, and live answer search.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

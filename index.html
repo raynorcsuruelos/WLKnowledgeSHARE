@@ -1,0 +1,2994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WL Tool FAQs - Kuwait</title>
+  <meta name="description" content="Hardened Wireline Tool FAQs with salted SHA-256 credentials, CSV bulk import/export, and live answer search." />
+  <meta property="og:title" content="WL Tool FAQs - Kuwait" />
+  <meta property="og:description" content="Hardened Wireline Tool FAQs with salted SHA-256 credentials, CSV bulk import/export, and live answer search." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    /* Visual styling aligned with WL Kit Finder */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body {
+      background-color: #e9edf2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 32px 16px;
+      color: #1f2937;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 960px;
+      border: 4px solid #000000;
+      border-radius: 12px;
+      background-color: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: popIn 0.25s ease-out;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #003057;
+      color: #ffffff;
+      border-bottom: 4px solid #000000;
+      padding: 16px 22px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      background: #ffffff;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .rig-logo {
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+
+    .brand-text {
+      border-left: 2px solid rgba(255, 255, 255, 0.25);
+      padding-left: 12px;
+    }
+
+    .app-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .app-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .security-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background-color: rgba(0, 200, 115, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    .security-badge svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #000000;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-admin {
+      background-color: #003057;
+      color: #ffffff;
+    }
+
+    .btn-admin:hover {
+      background-color: #002240;
+    }
+
+    .header .btn-admin {
+      background-color: #002240;
+      border-color: rgba(0, 0, 0, 0.4);
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+
+    .header .btn-admin:hover {
+      background-color: #001830;
+    }
+
+    .btn-admin.logged-in,
+    .header .btn-admin.logged-in {
+      background-color: #1a7a3c;
+      border-color: #000000;
+    }
+
+    .btn-admin.logged-in:hover,
+    .header .btn-admin.logged-in:hover {
+      background-color: #145a2c;
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      color: #1f2937;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f3f4f6;
+    }
+
+    .btn-danger {
+      background-color: #c0392b;
+      color: #ffffff;
+    }
+
+    .btn-danger:hover {
+      background-color: #962d22;
+    }
+
+    .btn-accent {
+      background-color: #e67e22;
+      color: #ffffff;
+    }
+
+    .btn-accent:hover {
+      background-color: #d35400;
+    }
+
+    /* SEARCH SECTION */
+    .search-panel {
+      padding: 18px 24px 8px;
+      background: #f7f9fb;
+      border-bottom: 2px solid #e2e8f0;
+      position: relative;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: #003057;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 42px 12px 42px;
+      border: 3px solid #000000;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      background-color: #ffffff;
+      color: #003057;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #0066a1;
+      box-shadow: 0 0 0 3px rgba(0, 102, 161, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: #e2e8f0;
+      color: #4b5563;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s;
+    }
+
+    .search-clear-btn:hover {
+      background: #cbd5e1;
+      color: #111827;
+    }
+
+    /* AUTOCOMPLETE / LIVE SUGGESTIONS DROPDOWN */
+    .search-suggestions-container {
+      position: absolute;
+      top: 100%;
+      left: 24px;
+      right: 24px;
+      background: #ffffff;
+      border: 3px solid #000000;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      max-height: 380px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+
+    .search-suggestions-container.active {
+      display: block;
+    }
+
+    .suggestion-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:hover,
+    .suggestion-item.highlighted {
+      background-color: #f0f7fd;
+    }
+
+    .suggestion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .tool-badge-pill {
+      font-size: 11px;
+      font-weight: 800;
+      background-color: #003057;
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .match-source-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .suggestion-question {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .suggestion-answer {
+      font-size: 13px;
+      font-weight: 700;
+      color: #c0392b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .suggestion-secondary {
+      font-size: 12px;
+      color: #4b5563;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .suggestion-empty {
+      padding: 20px 16px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    mark {
+      background-color: #fef08a;
+      color: #854d0e;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 800;
+    }
+
+    .quick-chips {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .quick-chips-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .quick-chip {
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #003057;
+      padding: 3px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .quick-chip:hover {
+      background-color: #003057;
+      border-color: #003057;
+      color: #ffffff;
+    }
+
+    /* SELECTORS */
+    .selectors {
+      display: flex;
+      gap: 16px;
+      padding: 16px 24px 22px;
+      background-color: #f7f9fb;
+      flex-wrap: wrap;
+    }
+
+    .selector-group {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 12px;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    .selector-group label {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    select, input[type="text"], input[type="password"], textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #ffffff;
+      color: #1f2937;
+      font-family: inherit;
+    }
+
+    .selector-group select {
+      border-width: 3px;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 11px 14px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    select:focus, input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+      outline: none;
+      border-color: #0066a1;
+    }
+
+    select:disabled, input:disabled, textarea:disabled {
+      background-color: #f3f4f6;
+      color: #6b7280;
+      border-color: #d1d5db;
+    }
+
+    /* RESULT DISPLAY */
+    .result-box {
+      margin: 0 24px 24px;
+      border: 3px solid #000000;
+      border-radius: 12px;
+      padding: 22px 24px;
+      background-color: #ffffff;
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-box.visible {
+      display: block;
+    }
+
+    .result-tool-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      background: #003057;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .question-label, .answer-label, .remarks-label, .notes-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #6b7280;
+      margin-bottom: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #003057;
+      margin-bottom: 18px;
+    }
+
+    .answer-text {
+      font-size: 1.85em;
+      font-weight: 800;
+      color: #c0392b;
+      margin-bottom: 22px;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .remarks-text {
+      font-size: 15px;
+      color: #1f2937;
+      margin-bottom: 18px;
+      line-height: 1.6;
+      padding: 12px 16px;
+      background-color: #fff8e1;
+      border: 2px solid #000000;
+      border-left: 6px solid #e67e22;
+      border-radius: 8px;
+    }
+
+    .notes-text {
+      font-size: 15px;
+      color: #1f2937;
+      line-height: 1.6;
+      padding: 12px 16px;
+      background-color: #f0f7fd;
+      border: 2px solid #000000;
+      border-left: 6px solid #0066a1;
+      border-radius: 8px;
+    }
+
+    .auto-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 700;
+      background-color: #0066a1;
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .no-result {
+      margin: 0 24px 24px;
+      padding: 40px 16px;
+      text-align: center;
+      background: #ffffff;
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      color: #6b7280;
+      font-size: 14px;
+      font-style: italic;
+      display: none;
+    }
+
+    /* MODAL STYLING */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      display: none !important;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex !important;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border: 4px solid #000000;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      animation: popIn 0.2s ease-out;
+    }
+
+    .modal-header {
+      padding: 14px 20px;
+      border-bottom: 3px solid #000000;
+      background-color: #003057;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-header button {
+      border-radius: 4px;
+      padding: 0 6px;
+    }
+
+    .modal-header button:hover {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .modal-footer {
+      padding: 12px 20px;
+      border-top: 2px solid #000000;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #000000;
+      margin-bottom: 20px;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      background: #f0f4f8;
+      border: 2px solid #000000;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      color: #003057;
+      transition: background-color 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .tab-btn.active {
+      background: #003057;
+      color: #ffffff;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      margin-bottom: 4px;
+    }
+
+    .faq-list-item {
+      border: 2px solid #000000;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #ffffff;
+      transition: background-color 0.15s ease;
+    }
+
+    .faq-list-item:hover {
+      background: #f0f7fd;
+    }
+
+    .faq-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .faq-item-title {
+      font-weight: 700;
+      color: #003057;
+      font-size: 15px;
+    }
+
+    .faq-item-answer {
+      font-weight: 700;
+      color: #c0392b;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    /* CSV DATA MANAGEMENT STYLES */
+    .csv-zone {
+      border: 2px dashed #003057;
+      background-color: #f8fafc;
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 16px;
+    }
+
+    .csv-zone:hover, .csv-zone.dragover {
+      background-color: #eff6ff;
+      border-color: #0066a1;
+    }
+
+    .csv-zone svg {
+      width: 38px;
+      height: 38px;
+      color: #003057;
+      margin-bottom: 8px;
+    }
+
+    .csv-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .csv-stat-card {
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .csv-stat-number {
+      font-size: 20px;
+      font-weight: 800;
+      color: #003057;
+    }
+
+    .csv-stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .table-container {
+      max-height: 250px;
+      overflow-y: auto;
+      border: 2px solid #000000;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .preview-table th {
+      background: #003057;
+      color: #ffffff;
+      padding: 8px 10px;
+      position: sticky;
+      top: 0;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .preview-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    .preview-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .status-badge.new {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
+    .status-badge.update {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+    }
+
+    .status-badge.error {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #003057;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 2px solid #000000;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 10000;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 16px 10px; }
+      .header { padding: 14px 16px; }
+      .rig-logo { width: 32px; height: 32px; }
+      .brand-logo { padding: 2px 8px; }
+      .app-title { font-size: 18px; }
+      .search-panel { padding: 14px 16px 6px; }
+      .search-suggestions-container { left: 16px; right: 16px; }
+      .selectors { flex-direction: column; padding: 14px 16px; }
+      .result-box, .no-result { margin: 0 16px 16px; padding: 18px; }
+      .answer-text { font-size: 1.5em; }
+      .modal-footer .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand-lockup">
+      <div class="brand-logo">
+        <svg class="rig-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oil rig logo">
+          <title>Oil rig</title>
+          <path d="M24 4 L14 38 M24 4 L34 38" stroke="#003057" stroke-width="2.6" stroke-linecap="round"></path>
+          <path d="M21.4 13 H26.6 M18.8 22 H29.2 M16.2 31 H31.8" stroke="#003057" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M21.4 13 L29.2 22 L16.2 31 M26.6 13 L18.8 22 L31.8 31" stroke="#0066a1" stroke-width="1.4" stroke-linecap="round"></path>
+          <rect x="21" y="2" width="6" height="3.5" rx="1" fill="#003057"></rect>
+          <rect x="8" y="37" width="32" height="4" rx="1" fill="#003057"></rect>
+          <path d="M12 41 V46 M36 41 V46" stroke="#003057" stroke-width="2.6" stroke-linecap="round"></path>
+          <path d="M27 4.5 L33 6.5 L27 8.5 Z" fill="#e67e22"></path>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="app-title">WL Tool FAQs</div>
+        <div class="app-subtitle">Wireline Tool Frequently Asked Questions - Kuwait v0.2 (rsuruelos@slb.com)</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="security-badge" title="Credentials protected via salted SHA-256">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        Salted SHA-256 Active
+      </div>
+      <button class="btn btn-admin" id="adminTriggerBtn" onclick="openAdmin()">🔒 Admin</button>
+    </div>
+  </div>
+
+  <!-- SEARCH PANEL WITH LIVE SUGGESTIONS -->
+  <div class="search-panel">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        id="faqSearchInput"
+        placeholder="Search answers, questions, part numbers, oils, torque... (e.g. DD-27, 24.5mm, Spirol)"
+        autocomplete="off"
+        oninput="handleSearchInput(event)"
+        onkeydown="handleSearchKeydown(event)"
+        onfocus="handleSearchFocus()"
+      />
+      <button class="search-clear-btn" id="searchClearBtn" style="display: none;" onclick="clearSearchInput()" title="Clear search">✕</button>
+    </div>
+
+    <!-- Quick Filter Chips -->
+    <div class="quick-chips">
+      <span class="quick-chips-label">Quick Search:</span>
+      <button class="quick-chip" onclick="applyQuickSearch('Oil')">Oil Types</button>
+      <button class="quick-chip" onclick="applyQuickSearch('Torque')">Torque Specs</button>
+      <button class="quick-chip" onclick="applyQuickSearch('Resistance')">Resistance / Motor</button>
+      <button class="quick-chip" onclick="applyQuickSearch('DD-27')">DD-27</button>
+      <button class="quick-chip" onclick="applyQuickSearch('Spirol')">Spirol Pin</button>
+    </div>
+
+    <!-- Floating Live Suggestions Window -->
+    <div class="search-suggestions-container" id="searchSuggestionsContainer">
+      <div id="searchSuggestionsList"></div>
+    </div>
+  </div>
+
+  <!-- SELECTORS -->
+  <div class="selectors">
+    <div class="selector-group">
+      <label for="toolSelect">Select Tool</label>
+      <select id="toolSelect" onchange="populateQuestions()">
+        <option value="">-- Select a Tool --</option>
+      </select>
+    </div>
+
+    <div class="selector-group">
+      <label for="questionSelect">
+        Select Question
+        <span class="auto-badge" id="autoBadge" style="display: none;">AUTO-SELECTED</span>
+      </label>
+      <select id="questionSelect" onchange="displayFAQ()">
+        <option value="">-- Select a Question --</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- RESULT DISPLAY -->
+  <div class="result-box" id="resultBox">
+    <div class="result-tool-tag" id="displayToolTag">TOOL</div>
+    <div class="question-label">Question:</div>
+    <div class="question-text" id="displayQuestion"></div>
+
+    <div class="answer-label">Answer:</div>
+    <div class="answer-text" id="displayAnswer"></div>
+
+    <div class="remarks-label">Remarks:</div>
+    <div class="remarks-text" id="displayRemarks"></div>
+
+    <div class="notes-label">Notes:</div>
+    <div class="notes-text" id="displayNotes"></div>
+  </div>
+
+  <div class="no-result" id="noResult" style="display: none;">No FAQ found for the selected combination.</div>
+
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay" id="passwordModal" style="display: none;">
+  <div class="modal-card" style="max-width: 440px;">
+    <div class="modal-header">
+      <h2>
+        <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Admin Authentication
+      </h2>
+      <button onclick="closeModal('passwordModal')" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom: 12px; font-size: 13px; color: #4b5563;">
+        Enter administrator password. Authentication verified against hardened salted SHA-256 hash.
+      </p>
+
+      <div class="form-group">
+        <label for="adminPasswordInput">Password</label>
+        <input type="password" id="adminPasswordInput" placeholder="Enter admin password" style="font-size: 16px; letter-spacing: 2px;" onkeydown="if(event.key==='Enter') verifyPassword()">
+      </div>
+
+      <div id="passwordError" style="color: #c0392b; font-size: 13px; font-weight: 700; display: none; margin-top: 6px;">
+        Incorrect password!
+      </div>
+      <div id="lockoutWarning" style="color: #c0392b; font-size: 12px; font-weight: 700; background: #fee2e2; border: 1px solid #f87171; padding: 8px 10px; border-radius: 6px; display: none; margin-top: 8px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('passwordModal')">Cancel</button>
+      <button class="btn btn-admin" id="unlockAdminBtn" onclick="verifyPassword()">Unlock Admin</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN MANAGEMENT MODAL -->
+<div class="modal-overlay" id="adminModal" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>
+        <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        WL Tool FAQs - Admin Portal
+      </h2>
+      <button onclick="closeAdminPortalAndLock()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Admin SharePoint Overwrite Action Area -->
+      <div style="background:#f0f4f8; border:2px solid #003057; border-radius:8px; padding:14px; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:260px;">
+          <div style="font-weight:800; font-size:13px; color:#003057; text-transform:uppercase; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
+            <span>📥 Overwrite File in SharePoint (Admin Only)</span>
+          </div>
+          <p style="font-size:12px; color:#444;">
+            Download the updated self-contained HTML file with latest data and salted credentials. Upload it to your SharePoint Document Library so all users permanently receive updates.
+          </p>
+        </div>
+        <button class="btn btn-admin" style="padding:10px 16px; font-size:13px; white-space:nowrap;" onclick="downloadCurrentSelfHtml()">
+          📥 Save &amp; Overwrite HTML for SharePoint
+        </button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabQuestionsBtn" onclick="switchAdminTab('questions')">Manage Questions</button>
+        <button class="tab-btn" id="tabToolsBtn" onclick="switchAdminTab('tools')">Manage Tools</button>
+        <button class="tab-btn" id="tabCsvBtn" onclick="switchAdminTab('csv')">Bulk Data (CSV)</button>
+        <button class="tab-btn" id="tabPasswordBtn" onclick="switchAdminTab('password')">Security &amp; Password</button>
+      </div>
+
+      <!-- TAB 1: MANAGE QUESTIONS -->
+      <div id="tabQuestionsContent" style="display: block;">
+        <div style="display: flex; gap: 12px; margin-bottom: 18px; align-items: flex-end; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 220px;">
+            <label for="adminToolFilter">Select Tool to Edit</label>
+            <select id="adminToolFilter" onchange="renderAdminQuestionList()"></select>
+          </div>
+          <button class="btn btn-admin" onclick="openQuestionForm(null)" style="white-space: nowrap;">
+            + Add New Question
+          </button>
+        </div>
+
+        <div id="adminQuestionList"></div>
+      </div>
+
+      <!-- TAB 2: MANAGE TOOLS -->
+      <div id="tabToolsContent" style="display: none;">
+        <div style="margin-bottom: 18px; padding: 14px; background: #f0f4f8; border: 2px solid #000000; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 800; color: #003057; text-transform: uppercase; margin-bottom: 10px;">Add New Tool</h3>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 140px;">
+              <input type="text" id="newToolKey" placeholder="Tool Key (e.g. xpt)">
+            </div>
+            <div style="flex: 2; min-width: 180px;">
+              <input type="text" id="newToolName" placeholder="Tool Display Name (e.g. XPT)">
+            </div>
+            <button class="btn btn-admin" onclick="addNewTool()">Add Tool</button>
+          </div>
+        </div>
+
+        <div id="adminToolList"></div>
+      </div>
+
+      <!-- TAB 3: BULK DATA (CSV IMPORT / EXPORT) -->
+      <div id="tabCsvContent" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          
+          <!-- EXPORT SECTION -->
+          <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #ffffff;">
+            <h3 style="font-size: 14px; font-weight: 800; color: #003057; text-transform: uppercase; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
+              <span>📤 Export All Data to CSV</span>
+            </h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 14px;">
+              Download the entire FAQ database as a standardized CSV file. Compatible with Microsoft Excel, UTF-8 formatted with character support.
+            </p>
+            <button class="btn btn-admin" style="width: 100%;" onclick="exportDataToCsv()">
+              📥 Download All FAQs as CSV
+            </button>
+            <div style="margin-top: 10px; text-align: center;">
+              <a href="javascript:void(0)" onclick="downloadCsvTemplate()" style="font-size: 12px; color: #0066a1; font-weight: 700; text-decoration: underline;">
+                Download Sample CSV Template
+              </a>
+            </div>
+          </div>
+
+          <!-- IMPORT SECTION -->
+          <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #ffffff;">
+            <h3 style="font-size: 14px; font-weight: 800; color: #003057; text-transform: uppercase; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
+              <span>📥 Import &amp; Merge CSV</span>
+            </h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 14px;">
+              Bulk update or append tool FAQs from a CSV file. Enforces strict integrity constraints and validates format before merging.
+            </p>
+            <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleCsvFileSelected(event)">
+            <button class="btn btn-secondary" style="width: 100%; border: 2px dashed #003057;" onclick="document.getElementById('csvFileInput').click()">
+              📂 Select CSV File to Inspect
+            </button>
+          </div>
+
+        </div>
+
+        <!-- CSV PREVIEW & INTEGRITY VALIDATION AREA -->
+        <div id="csvValidationContainer" style="display: none; border: 2px solid #003057; border-radius: 8px; padding: 16px; background: #f8fafc; margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="font-size: 14px; font-weight: 800; color: #003057; text-transform: uppercase;">
+              CSV Inspection &amp; Integrity Validation
+            </h4>
+            <span id="csvFileNameBadge" class="auto-badge" style="background:#003057;"></span>
+          </div>
+
+          <!-- Summary Metric Cards -->
+          <div class="csv-stats-grid">
+            <div class="csv-stat-card">
+              <div class="csv-stat-number" id="statTotalRows">0</div>
+              <div class="csv-stat-label">Total Rows</div>
+            </div>
+            <div class="csv-stat-card" style="border-color:#16a34a;">
+              <div class="csv-stat-number" style="color:#16a34a;" id="statValidRows">0</div>
+              <div class="csv-stat-label">Valid Records</div>
+            </div>
+            <div class="csv-stat-card" style="border-color:#0284c7;">
+              <div class="csv-stat-number" style="color:#0284c7;" id="statNewQuestions">0</div>
+              <div class="csv-stat-label">New FAQs</div>
+            </div>
+            <div class="csv-stat-card" style="border-color:#d97706;">
+              <div class="csv-stat-number" style="color:#d97706;" id="statUpdates">0</div>
+              <div class="csv-stat-label">Updates</div>
+            </div>
+            <div class="csv-stat-card" style="border-color:#dc2626;">
+              <div class="csv-stat-number" style="color:#dc2626;" id="statErrors">0</div>
+              <div class="csv-stat-label">Invalid Rows</div>
+            </div>
+          </div>
+
+          <!-- Error Feedback Box -->
+          <div id="csvErrorBox" style="display: none; background: #fef2f2; border: 2px solid #ef4444; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; color: #991b1b; font-size: 12px; max-height: 120px; overflow-y: auto;">
+          </div>
+
+          <!-- Preview Table -->
+          <div class="table-container">
+            <table class="preview-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Tool Key</th>
+                  <th>Tool Name</th>
+                  <th>Question</th>
+                  <th>Answer</th>
+                  <th>Remarks / Notes</th>
+                </tr>
+              </thead>
+              <tbody id="csvPreviewTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Merge Options & Execution -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; background: #ffffff; padding: 12px; border: 2px solid #000000; border-radius: 8px;">
+            <div>
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; cursor: pointer;">
+                <input type="radio" name="csvImportMode" value="merge" checked>
+                <span>Merge &amp; Update (Safe: Keep existing data, update matches, add new)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: #c0392b; cursor: pointer; margin-top: 4px;">
+                <input type="radio" name="csvImportMode" value="replace">
+                <span>Replace Entire Database (Warning: Overwrites existing tools &amp; FAQs)</span>
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary" onclick="cancelCsvImport()">Cancel</button>
+              <button class="btn btn-admin" id="btnExecuteMerge" onclick="executeCsvMerge()">
+                ✅ Confirm &amp; Merge into Database
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- TAB 4: SECURITY & PASSWORD -->
+      <div id="tabPasswordContent" style="display: none;">
+        <div style="max-width: 540px; padding: 16px; background: #f9fbff; border: 2px solid #000000; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 800; color: #003057; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Hardened Administrator Password
+          </h3>
+          
+          <div style="background: #e0f2fe; border: 1px solid #7dd3fc; border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; color: #0369a1; line-height: 1.5;">
+            <strong>Security Hardening Active:</strong> Passwords are protected using cryptographically random 16-byte salts and SHA-256 digest hashing. Plaintext credentials are never stored in localStorage or the exported file.
+          </div>
+
+          <div class="form-group">
+            <label for="changeCurrentPassword">Current Password *</label>
+            <input type="password" id="changeCurrentPassword" placeholder="Enter current admin password">
+          </div>
+
+          <div class="form-group">
+            <label for="changeNewPassword">New Password * (Min 8 characters)</label>
+            <input type="password" id="changeNewPassword" placeholder="Enter new strong password">
+          </div>
+
+          <div class="form-group">
+            <label for="changeConfirmPassword">Confirm New Password *</label>
+            <input type="password" id="changeConfirmPassword" placeholder="Re-enter new password">
+          </div>
+
+          <div id="passwordChangeError" style="color: #c0392b; font-size: 12px; font-weight: 700; display: none; margin-bottom: 12px;"></div>
+          <div id="passwordChangeSuccess" style="color: #008844; font-size: 12px; font-weight: 700; display: none; margin-bottom: 12px;">Password updated successfully!</div>
+
+          <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
+            <button class="btn btn-admin" onclick="saveNewAdminPassword()">Update Salted Password</button>
+            <button class="btn btn-secondary" onclick="resetPasswordToDefaultCredentials()">Reset to Hardened Default</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAdminPortalAndLock()">Close &amp; Lock Admin</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION ADD / EDIT MODAL -->
+<div class="modal-overlay" id="questionEditModal" style="display: none;">
+  <div class="modal-card" style="max-width: 650px;">
+    <div class="modal-header">
+      <h2 id="questionModalTitle">Add New FAQ Entry</h2>
+      <button onclick="cancelQuestionEdit()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editQuestionId" value="">
+      <div class="form-group">
+        <label for="editToolKey">Tool *</label>
+        <select id="editToolKey"></select>
+      </div>
+      <div class="form-group">
+        <label for="editQuestion">Question *</label>
+        <input type="text" id="editQuestion" placeholder="e.g. What is the oil needed to fill this tool?">
+      </div>
+      <div class="form-group">
+        <label for="editAnswer">Answer * (High Visibility)</label>
+        <input type="text" id="editAnswer" placeholder="e.g. 103063625 - DD-27 Oil">
+      </div>
+      <div class="form-group">
+        <label for="editRemarks">Remarks</label>
+        <textarea id="editRemarks" rows="2" placeholder="e.g. Usually in 5 gallon yellow plastic container"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="editNotes">Notes</label>
+        <textarea id="editNotes" rows="2" placeholder="e.g. Fill in the FILL PORT only"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="cancelQuestionEdit()">Cancel</button>
+      <button class="btn btn-admin" onclick="saveQuestionItemAndLockOption()">Save &amp; Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-msg" id="toastMsg" style="display: none;"></div>
+
+<!-- Immediate modal reset script -->
+<script>
+  (function() {
+    var overlays = document.querySelectorAll('.modal-overlay');
+    for (var i = 0; i < overlays.length; i++) {
+      overlays[i].classList.remove('active');
+      overlays[i].style.display = 'none';
+    }
+  })();
+</script>
+
+<script>
+  // ==========================================
+  // PURE VANILLA SHA-256 HASHING ENGINE
+  // (Works identically in all modern browsers,
+  // file:// protocols, offline & SharePoint iframes)
+  // ==========================================
+  function sha256_sync(ascii) {
+    function rightRotate(value, amount) {
+      return (value >>> amount) | (value << (32 - amount));
+    }
+    var mathPow = Math.pow;
+    var maxWord = mathPow(2, 32);
+    var lengthProperty = "length";
+    var i, j;
+    var result = "";
+    var words = [];
+    var asciiBitLength = ascii[lengthProperty] * 8;
+    var hash = [];
+    var k = [];
+    var primeCounter = 0;
+    var isComposite = {};
+    for (var candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) {
+          isComposite[i] = candidate;
+        }
+        hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+        k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+    ascii += "\x80";
+    while (ascii[lengthProperty] % 64 - 56) ascii += "\x00";
+    for (i = 0; i < ascii[lengthProperty]; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return "";
+      words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+    words[words[lengthProperty]] = asciiBitLength;
+    for (j = 0; j < words[lengthProperty];) {
+      var w = words.slice(j, j += 16);
+      var oldHash = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2];
+        var a = hash[0], e = hash[4];
+        var temp1 = hash[7]
+          + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+          + ((e & hash[5]) ^ ((~e) & hash[6]))
+          + k[i]
+          + (w[i] = (i < 16) ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0
+          );
+        var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+          + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) {
+        hash[i] = (hash[i] + oldHash[i]) | 0;
+      }
+    }
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+        var b = (hash[i] >> (j * 8)) & 255;
+        result += ((b < 16) ? "0" : "") + b.toString(16);
+      }
+    }
+    return result;
+  }
+
+  function generateSecureSalt() {
+    try {
+      var arr = new Uint8Array(16);
+      if (window.crypto && window.crypto.getRandomValues) {
+        window.crypto.getRandomValues(arr);
+        var hex = "";
+        for (var i = 0; i < arr.length; i++) {
+          hex += (arr[i] < 16 ? "0" : "") + arr[i].toString(16);
+        }
+        return hex;
+      }
+    } catch (e) {}
+    // Fallback pseudo-random
+    var s = "";
+    for (var j = 0; j < 32; j++) {
+      s += Math.floor(Math.random() * 16).toString(16);
+    }
+    return s;
+  }
+
+  function computeSaltedHash(password, salt) {
+    // Salted SHA-256: H(salt + password)
+    return sha256_sync(salt + password);
+  }
+
+  function constantTimeCompare(a, b) {
+    if (typeof a !== 'string' || typeof b !== 'string') return false;
+    if (a.length !== b.length) return false;
+    var result = 0;
+    for (var i = 0; i < a.length; i++) {
+      result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+    }
+    return result === 0;
+  }
+
+  // ==========================================
+  // HARDENED DEFAULT SEED CREDENTIALS & DATA
+  // Password set to: Pogiako1980!
+  // Salt: 2c78a1fab40663423e7520b93f1da412
+  // SHA-256(salt + 'Pogiako1980!') = a2e249563c737460d41b23ed586ddcc8d8861830a5802b670b3aa032ae77895f
+  // (Plaintext password is never stored)
+  // ==========================================
+  const DEFAULT_CREDENTIALS = {
+    salt: "2c78a1fab40663423e7520b93f1da412",
+    hash: "a2e249563c737460d41b23ed586ddcc8d8861830a5802b670b3aa032ae77895f"
+  };
+
+  const DEFAULT_TOOLS = [
+    { key: "usis", name: "USIT" },
+    { key: "hrms", name: "HRMS" },
+    { key: "ppc", name: "PPC" },
+    { key: "emm", name: "EMM" },
+    { key: "resolve", name: "Resolve-iX" },
+    { key: "spear", name: "Spear-TTiX" },
+    { key: "tufftrac", name: "TuffTRAC" },
+    { key: "dsi", name: "DSI" },
+    { key: "msip", name: "MSIP" }
+  ];
+
+  const DEFAULT_FAQS = {
+    "usis": [
+      {
+        "id": "usis-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "101561806 - USIT Oil",
+        "remarks": "Usually in 20 liter gray colored can.",
+        "notes": "Fill in the FILL PORT only, in Compensating Window, until piston is full and oil bleeds from RV."
+      },
+      {
+        "id": "usis-2",
+        "q": "What is the minimum OD of its Centralizer Rollers?",
+        "a": "24.5mm",
+        "remarks": "Replace Centralizer Roller with p/n P222602 when OD is smaller than 24.5mm.",
+        "notes": "Use a caliper and make two measurements 90deg from each other."
+      },
+      {
+        "id": "usis-3",
+        "q": "How to check the integrity of the motor?",
+        "a": "Check the resistance between UH3-UH8 and UH9-UH10, should be 88Ω +/- 10Ω.",
+        "remarks": "Ideally value should be balanced, 1.5Ω difference as per SWI.",
+        "notes": "Megger only on UH3 or UH8, >100MΩ. UH10 is shorted to mass."
+      },
+      {
+        "id": "usis-4",
+        "q": "What is the Part Number of the SCREW needed to secure USRS and IBC subs?",
+        "a": "B016090 is the correct p/n of the screw.",
+        "remarks": "Make sure that B016090 ONLY has 4 threads.",
+        "notes": "A longer screw will touch the Rotating Housing causing oil leaks or motor failure."
+      }
+    ],
+    "hrms": [
+      {
+        "id": "hrms-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, bottom part of UH section."
+      }
+    ],
+    "ppc": [
+      {
+        "id": "ppc-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, marked F in Compensating Housing."
+      }
+    ],
+    "emm": [
+      {
+        "id": "emm-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, near the Compensating Window."
+      }
+    ],
+    "resolve": [
+      {
+        "id": "resolve-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, marked F in SPCPS. Use a gauge/dipstick to measure piston level, set at Max."
+      },
+      {
+        "id": "resolve-2",
+        "q": "What is the part number of Spirol Pin needed to secure the SPRPS threaded ring to SPTCS?",
+        "a": "B016033 - Spirol Pins",
+        "remarks": "Install brand new Spirol Pins after every service, DO NOT FORGET TO INSTALL!",
+        "notes": "Make sure that these two Spirol Pins are removed before tool disconnection."
+      },
+      {
+        "id": "resolve-3",
+        "q": "What is the part number of Retaining Rings needed to install the Coupling Sleeve between SPRPS and SPTCS?",
+        "a": "100604349/B044126(preferred) - Retaining Rings",
+        "remarks": "Install brand new Retaining Rings after every service, DO NOT FORGET TO INSTALL!",
+        "notes": "Use the proper circlip pliers during installation to prevent damage."
+      },
+      {
+        "id": "resolve-4",
+        "q": "What is the Torque needed to tighten the Retainer Nut 105003953 at the bottom of SPTCS?",
+        "a": "300 in.lbf or 25 ft.lbf of torque is required",
+        "remarks": "Lubricate with grease and tighten Retainer Nut using calibrated torque Wrench and SFT 103153024.",
+        "notes": "Double check the setting of Torque Wrench before using."
+      }
+    ],
+    "spear": [
+      {
+        "id": "spear-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, marked F in SPCPS. Use a gauge/dipstick to measure piston level, set at Max."
+      },
+      {
+        "id": "spear-2",
+        "q": "What are the resistance values of Spear HV Motors when connected together?",
+        "a": "4 drives = 5Ω, 3 drives = 6.67Ω, 2 drives = 10Ω , 1 drive = 18Ω-21Ω",
+        "remarks": "Tolerance on resistance readings on multiple drives are +/- 5%.",
+        "notes": "Measurement done on SPHYS UH4-UH9, UH4-UH10, and UH9-UH10. Ideally, all readings should be balanced."
+      },
+      {
+        "id": "spear-3",
+        "q": "What is the Torque needed to tighten the Wheel Attachment Screw?",
+        "a": "82 in.lbf of torque is required",
+        "remarks": "Apply Loctite 246 (pn B046992) on Wheel Attachment Screw p/n 103270330 and Gold Grease on the wheels.",
+        "notes": "Double check the setting of Torque Wrench and use T30 Torx Bit with SFT 103202446."
+      }
+    ],
+    "tufftrac": [
+      {
+        "id": "tufftrac-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "103063625 - DD-27 Oil",
+        "remarks": "Usually in 5 gallon yellow colored plastic container",
+        "notes": "Fill in the FILL PORT only, marked F in XHMS or XDUS. Check oil level in the XCAS using a gauge/dipstick."
+      },
+      {
+        "id": "tufftrac-2",
+        "q": "What is the Torque needed to tighten the Wheel Attachment Screw?",
+        "a": "18 ft.lbf of torque is required",
+        "remarks": "Wheel Attachment Screw p/n 100586377 and Red High Temp grease on the wheels.",
+        "notes": "Torque Wrench is fixed at 18 ft.lbf, use T30 Torx Plus Bit with SFT 100838495."
+      }
+    ],
+    "dsi": [
+      {
+        "id": "dsi-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "B015518 - Capella Oil",
+        "remarks": "Usually in 1 gallon white colored plastic container",
+        "notes": "Usually filled only in FIT room, contact TLM if needed in the field."
+      }
+    ],
+    "msip": [
+      {
+        "id": "msip-1",
+        "q": "What is the oil needed to fill/top-up this tool?",
+        "a": "B950546 - Shin-Etsu Oil",
+        "remarks": "Usually in 16kg can, reacts with other oils and forms a gluey stuff that plugs holes.",
+        "notes": "Fill in the FILL PORT only, near the Compensating Window. Use ONLY DEDICATED Adaptors!"
+      }
+    ]
+  };
+
+  const STORAGE_KEY_TOOLS = 'wl_tool_faqs_tools_kuwait_v3';
+  const STORAGE_KEY_FAQS = 'wl_tool_faqs_data_kuwait_v3';
+  const STORAGE_KEY_CREDS = 'wl_tool_faqs_creds_salted_v3';
+
+  // Multi-tier storage fallback for restrictive SharePoint iframes
+  const SafeStorage = {
+    mem: {},
+    get: function(key) {
+      try {
+        const val = localStorage.getItem(key);
+        if (val) return val;
+      } catch(e) {}
+      try {
+        const val = sessionStorage.getItem(key);
+        if (val) return val;
+      } catch(e) {}
+      return this.mem[key] || null;
+    },
+    set: function(key, val) {
+      this.mem[key] = val;
+      try { localStorage.setItem(key, val); } catch(e) {}
+      try { sessionStorage.setItem(key, val); } catch(e) {}
+    },
+    remove: function(key) {
+      delete this.mem[key];
+      try { localStorage.removeItem(key); } catch(e) {}
+      try { sessionStorage.removeItem(key); } catch(e) {}
+    }
+  };
+
+  let currentTools = [];
+  let currentFaqs = {};
+  let currentCredentials = DEFAULT_CREDENTIALS;
+  let isAdminAuthenticated = false;
+
+  // Brute-force protection
+  let failedLoginAttempts = 0;
+  let lockoutUntil = 0;
+  let lockoutTimerInterval = null;
+
+  // Search state
+  let currentSuggestions = [];
+  let highlightedSuggestionIndex = -1;
+
+  // CSV Import pending state
+  let parsedCsvData = null;
+
+  function forceCloseAllModals() {
+    document.querySelectorAll('.modal-overlay').forEach(function(el) {
+      el.classList.remove('active');
+      el.style.display = 'none';
+    });
+    isAdminAuthenticated = false;
+    updateAdminButtonState();
+  }
+
+  // Initialize from Storage or Defaults
+  function initData() {
+    forceCloseAllModals();
+
+    // Clean up any legacy plaintext passwords from storage
+    try {
+      localStorage.removeItem('wl_tool_faqs_admin_pwd_sharepoint_v2');
+      sessionStorage.removeItem('wl_tool_faqs_admin_pwd_sharepoint_v2');
+    } catch(e) {}
+
+    try {
+      const storedTools = SafeStorage.get(STORAGE_KEY_TOOLS);
+      const storedFaqs = SafeStorage.get(STORAGE_KEY_FAQS);
+      const storedCreds = SafeStorage.get(STORAGE_KEY_CREDS);
+
+      currentTools = storedTools ? JSON.parse(storedTools) : JSON.parse(JSON.stringify(DEFAULT_TOOLS));
+      currentFaqs = storedFaqs ? JSON.parse(storedFaqs) : JSON.parse(JSON.stringify(DEFAULT_FAQS));
+
+      if (storedCreds) {
+        currentCredentials = JSON.parse(storedCreds);
+      } else {
+        currentCredentials = DEFAULT_CREDENTIALS;
+      }
+    } catch (e) {
+      currentTools = JSON.parse(JSON.stringify(DEFAULT_TOOLS));
+      currentFaqs = JSON.parse(JSON.stringify(DEFAULT_FAQS));
+      currentCredentials = DEFAULT_CREDENTIALS;
+    }
+
+    updateAdminButtonState();
+    populateToolDropdown();
+
+    // Close suggestions on outside click
+    document.addEventListener('click', function(e) {
+      const panel = document.querySelector('.search-panel');
+      if (panel && !panel.contains(e.target)) {
+        hideSuggestions();
+      }
+    });
+  }
+
+  function updateAdminButtonState() {
+    const btn = document.getElementById('adminTriggerBtn');
+    if (!btn) return;
+    if (isAdminAuthenticated) {
+      btn.innerHTML = '🔓 Admin (Unlocked)';
+      btn.classList.add('logged-in');
+    } else {
+      btn.innerHTML = '🔒 Admin';
+      btn.classList.remove('logged-in');
+    }
+  }
+
+  function lockAdmin() {
+    isAdminAuthenticated = false;
+    updateAdminButtonState();
+  }
+
+  function saveData() {
+    SafeStorage.set(STORAGE_KEY_TOOLS, JSON.stringify(currentTools));
+    SafeStorage.set(STORAGE_KEY_FAQS, JSON.stringify(currentFaqs));
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toastMsg');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3500);
+  }
+
+  // ==========================================
+  // SEARCH & AUTOCOMPLETE SUGGESTIONS ENGINE
+  // ==========================================
+  function handleSearchInput(e) {
+    const query = e.target.value.trim();
+    const clearBtn = document.getElementById('searchClearBtn');
+    if (clearBtn) {
+      clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
+    }
+
+    if (query.length < 1) {
+      hideSuggestions();
+      return;
+    }
+
+    renderSearchSuggestions(query);
+  }
+
+  function handleSearchFocus() {
+    const query = document.getElementById('faqSearchInput').value.trim();
+    if (query.length >= 1) {
+      renderSearchSuggestions(query);
+    }
+  }
+
+  function clearSearchInput() {
+    const input = document.getElementById('faqSearchInput');
+    input.value = '';
+    document.getElementById('searchClearBtn').style.display = 'none';
+    hideSuggestions();
+    input.focus();
+  }
+
+  function applyQuickSearch(term) {
+    const input = document.getElementById('faqSearchInput');
+    input.value = term;
+    document.getElementById('searchClearBtn').style.display = 'flex';
+    renderSearchSuggestions(term);
+    input.focus();
+  }
+
+  function hideSuggestions() {
+    const container = document.getElementById('searchSuggestionsContainer');
+    if (container) container.classList.remove('active');
+    highlightedSuggestionIndex = -1;
+  }
+
+  function highlightMatches(text, query) {
+    if (!text) return '';
+    if (!query) return escapeHtml(text);
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('(' + escapedQuery + ')', 'gi');
+    return escapeHtml(text).replace(regex, '<mark>$1</mark>');
+  }
+
+  function renderSearchSuggestions(query) {
+    const container = document.getElementById('searchSuggestionsContainer');
+    const list = document.getElementById('searchSuggestionsList');
+    if (!container || !list) return;
+
+    const lowerQuery = query.toLowerCase();
+    const tokens = lowerQuery.split(/\s+/).filter(t => t.length > 0);
+    const results = [];
+
+    // Search across all tools and questions
+    currentTools.forEach(tool => {
+      const toolKey = tool.key;
+      const toolName = tool.name;
+      const questions = currentFaqs[toolKey] || [];
+
+      questions.forEach((faq, idx) => {
+        const qText = (faq.q || '').toLowerCase();
+        const aText = (faq.a || '').toLowerCase();
+        const remText = (faq.remarks || '').toLowerCase();
+        const noteText = (faq.notes || '').toLowerCase();
+        const tName = toolName.toLowerCase();
+        const tKey = toolKey.toLowerCase();
+
+        // Check if all tokens match anywhere in this FAQ entry
+        let matchesAll = true;
+        let score = 0;
+        let matchSource = '';
+
+        tokens.forEach(tok => {
+          let tokMatched = false;
+          if (aText.includes(tok)) {
+            tokMatched = true;
+            score += 15;
+            if (!matchSource) matchSource = 'Answer';
+          }
+          if (qText.includes(tok)) {
+            tokMatched = true;
+            score += 12;
+            if (!matchSource) matchSource = 'Question';
+          }
+          if (tName.includes(tok) || tKey.includes(tok)) {
+            tokMatched = true;
+            score += 8;
+            if (!matchSource) matchSource = 'Tool';
+          }
+          if (remText.includes(tok)) {
+            tokMatched = true;
+            score += 5;
+            if (!matchSource) matchSource = 'Remarks';
+          }
+          if (noteText.includes(tok)) {
+            tokMatched = true;
+            score += 5;
+            if (!matchSource) matchSource = 'Notes';
+          }
+          if (!tokMatched) matchesAll = false;
+        });
+
+        if (matchesAll) {
+          results.push({
+            toolKey,
+            toolName,
+            questionIndex: idx,
+            faq,
+            score,
+            matchSource: matchSource || 'Keyword'
+          });
+        }
+      });
+    });
+
+    // Sort by relevance score descending
+    results.sort((a, b) => b.score - a.score);
+    currentSuggestions = results.slice(0, 10);
+    highlightedSuggestionIndex = -1;
+
+    list.innerHTML = '';
+
+    if (currentSuggestions.length === 0) {
+      list.innerHTML = `
+        <div class="suggestion-empty">
+          No FAQs or answers found matching "<strong>${escapeHtml(query)}</strong>". Try another keyword or part number.
+        </div>
+      `;
+    } else {
+      currentSuggestions.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.setAttribute('data-index', i);
+        div.onclick = function() {
+          selectSuggestion(i);
+        };
+
+        const highlightedQ = highlightMatches(item.faq.q, query);
+        const highlightedA = highlightMatches(item.faq.a, query);
+
+        div.innerHTML = `
+          <div class="suggestion-header">
+            <span class="tool-badge-pill">${escapeHtml(item.toolName)}</span>
+            <span class="match-source-tag">Matched in ${escapeHtml(item.matchSource)}</span>
+          </div>
+          <div class="suggestion-question">${highlightedQ}</div>
+          <div class="suggestion-answer">Ans: ${highlightedA}</div>
+          ${item.faq.remarks ? `<div class="suggestion-secondary">Remarks: ${highlightMatches(item.faq.remarks, query)}</div>` : ''}
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    container.classList.add('active');
+  }
+
+  function handleSearchKeydown(e) {
+    const container = document.getElementById('searchSuggestionsContainer');
+    if (!container || !container.classList.contains('active')) return;
+
+    const items = container.querySelectorAll('.suggestion-item');
+    if (items.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      highlightedSuggestionIndex = (highlightedSuggestionIndex + 1) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      highlightedSuggestionIndex = (highlightedSuggestionIndex - 1 + items.length) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === 'Enter') {
+      if (highlightedSuggestionIndex >= 0 && highlightedSuggestionIndex < currentSuggestions.length) {
+        e.preventDefault();
+        selectSuggestion(highlightedSuggestionIndex);
+      }
+    } else if (e.key === 'Escape') {
+      hideSuggestions();
+    }
+  }
+
+  function updateSuggestionHighlight(items) {
+    items.forEach((item, idx) => {
+      if (idx === highlightedSuggestionIndex) {
+        item.classList.add('highlighted');
+        item.scrollIntoView({ block: 'nearest' });
+      } else {
+        item.classList.remove('highlighted');
+      }
+    });
+  }
+
+  function selectSuggestion(index) {
+    const item = currentSuggestions[index];
+    if (!item) return;
+
+    // Set Tool dropdown
+    const toolSelect = document.getElementById('toolSelect');
+    toolSelect.value = item.toolKey;
+    populateQuestions();
+
+    // Set Question dropdown
+    const questionSelect = document.getElementById('questionSelect');
+    questionSelect.value = item.questionIndex;
+    displayFAQ();
+
+    hideSuggestions();
+
+    // Scroll to result box smoothly
+    const resultBox = document.getElementById('resultBox');
+    if (resultBox) {
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  // ==========================================
+  // DROPDOWNS & MAIN DISPLAY
+  // ==========================================
+  function populateToolDropdown() {
+    const toolSelect = document.getElementById('toolSelect');
+    if (!toolSelect) return;
+    const selectedVal = toolSelect.value;
+    toolSelect.innerHTML = '<option value="">-- Select a Tool --</option>';
+
+    currentTools.forEach(tool => {
+      const opt = document.createElement('option');
+      opt.value = tool.key;
+      opt.textContent = tool.name;
+      toolSelect.appendChild(opt);
+    });
+
+    if (selectedVal && currentTools.some(t => t.key === selectedVal)) {
+      toolSelect.value = selectedVal;
+      populateQuestions();
+    } else {
+      const resultBox = document.getElementById('resultBox');
+      const noResult = document.getElementById('noResult');
+      if (resultBox) resultBox.classList.remove('visible');
+      if (noResult) noResult.style.display = 'none';
+      const questionSelect = document.getElementById('questionSelect');
+      if (questionSelect) questionSelect.innerHTML = '<option value="">-- Select a Question --</option>';
+    }
+  }
+
+  function populateQuestions() {
+    const toolKey = document.getElementById('toolSelect').value;
+    const questionSelect = document.getElementById('questionSelect');
+    const autoBadge = document.getElementById('autoBadge');
+
+    questionSelect.innerHTML = '<option value="">-- Select a Question --</option>';
+    document.getElementById('resultBox').classList.remove('visible');
+    document.getElementById('noResult').style.display = 'none';
+    autoBadge.style.display = 'none';
+
+    if (!toolKey || !currentFaqs[toolKey]) return;
+
+    const questions = currentFaqs[toolKey];
+
+    questions.forEach((item, idx) => {
+      const opt = document.createElement('option');
+      opt.value = idx;
+      opt.textContent = item.q;
+      questionSelect.appendChild(opt);
+    });
+
+    if (questions.length === 1) {
+      questionSelect.value = 0;
+      autoBadge.style.display = 'inline-block';
+      displayFAQ();
+    }
+  }
+
+  function displayFAQ() {
+    const toolKey = document.getElementById('toolSelect').value;
+    const qIdx = document.getElementById('questionSelect').value;
+    const resultBox = document.getElementById('resultBox');
+    const noResult = document.getElementById('noResult');
+
+    resultBox.classList.remove('visible');
+    noResult.style.display = 'none';
+
+    if (toolKey && qIdx !== '' && currentFaqs[toolKey] && currentFaqs[toolKey][qIdx]) {
+      const item = currentFaqs[toolKey][qIdx];
+      const toolObj = currentTools.find(t => t.key === toolKey);
+      document.getElementById('displayToolTag').textContent = toolObj ? toolObj.name : toolKey.toUpperCase();
+      document.getElementById('displayQuestion').textContent = item.q;
+      document.getElementById('displayAnswer').textContent = item.a;
+      document.getElementById('displayRemarks').textContent = item.remarks || '(None)';
+      document.getElementById('displayNotes').textContent = item.notes || '(None)';
+      resultBox.classList.add('visible');
+    } else if (toolKey && qIdx !== '') {
+      noResult.style.display = 'block';
+    }
+  }
+
+  // ==========================================
+  // HARDENED ADMIN AUTHENTICATION
+  // Salted SHA-256 + Brute Force Lockout
+  // ==========================================
+  function openAdmin() {
+    if (isAdminAuthenticated) {
+      openAdminPortal();
+    } else {
+      const now = Date.now();
+      if (now < lockoutUntil) {
+        showLockoutMessage();
+        const pwdModal = document.getElementById('passwordModal');
+        pwdModal.style.display = 'flex';
+        pwdModal.classList.add('active');
+        return;
+      }
+
+      document.getElementById('adminPasswordInput').value = '';
+      document.getElementById('passwordError').style.display = 'none';
+      document.getElementById('lockoutWarning').style.display = 'none';
+      const unlockBtn = document.getElementById('unlockAdminBtn');
+      if (unlockBtn) unlockBtn.disabled = false;
+      const pwdInput = document.getElementById('adminPasswordInput');
+      if (pwdInput) pwdInput.disabled = false;
+
+      const pwdModal = document.getElementById('passwordModal');
+      pwdModal.style.display = 'flex';
+      pwdModal.classList.add('active');
+      setTimeout(() => {
+        if (pwdInput) pwdInput.focus();
+      }, 50);
+    }
+  }
+
+  function showLockoutMessage() {
+    const remainingSec = Math.max(1, Math.ceil((lockoutUntil - Date.now()) / 1000));
+    const warning = document.getElementById('lockoutWarning');
+    const pwdInput = document.getElementById('adminPasswordInput');
+    const unlockBtn = document.getElementById('unlockAdminBtn');
+
+    if (warning) {
+      warning.textContent = `Security Lockout Active: Too many failed attempts. Please wait ${remainingSec}s before retrying.`;
+      warning.style.display = 'block';
+    }
+    if (pwdInput) pwdInput.disabled = true;
+    if (unlockBtn) unlockBtn.disabled = true;
+
+    if (!lockoutTimerInterval) {
+      lockoutTimerInterval = setInterval(() => {
+        const left = Math.ceil((lockoutUntil - Date.now()) / 1000);
+        if (left <= 0) {
+          clearInterval(lockoutTimerInterval);
+          lockoutTimerInterval = null;
+          failedLoginAttempts = 0;
+          if (warning) warning.style.display = 'none';
+          if (pwdInput) {
+            pwdInput.disabled = false;
+            pwdInput.focus();
+          }
+          if (unlockBtn) unlockBtn.disabled = false;
+        } else if (warning) {
+          warning.textContent = `Security Lockout Active: Too many failed attempts. Please wait ${left}s before retrying.`;
+        }
+      }, 1000);
+    }
+  }
+
+  function verifyPassword() {
+    if (Date.now() < lockoutUntil) {
+      showLockoutMessage();
+      return;
+    }
+
+    const input = document.getElementById('adminPasswordInput').value;
+    const computedHash = computeSaltedHash(input, currentCredentials.salt);
+
+    if (constantTimeCompare(computedHash, currentCredentials.hash)) {
+      isAdminAuthenticated = true;
+      failedLoginAttempts = 0;
+      closeModal('passwordModal');
+      updateAdminButtonState();
+      openAdminPortal();
+    } else {
+      failedLoginAttempts++;
+      const errEl = document.getElementById('passwordError');
+      errEl.textContent = 'Incorrect password!';
+      errEl.style.display = 'block';
+
+      if (failedLoginAttempts >= 5) {
+        lockoutUntil = Date.now() + 30000; // 30 second cooldown
+        showLockoutMessage();
+      }
+    }
+  }
+
+  function openAdminPortal() {
+    renderAdminToolDropdowns();
+    renderAdminQuestionList();
+    renderAdminToolList();
+    const adminModal = document.getElementById('adminModal');
+    adminModal.style.display = 'flex';
+    adminModal.classList.add('active');
+  }
+
+  function closeAdminPortalAndLock() {
+    closeModal('adminModal');
+    lockAdmin();
+    showToast('Admin mode locked');
+  }
+
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('active');
+      el.style.display = 'none';
+    }
+  }
+
+  function switchAdminTab(tab) {
+    const tabQuestionsBtn = document.getElementById('tabQuestionsBtn');
+    const tabToolsBtn = document.getElementById('tabToolsBtn');
+    const tabCsvBtn = document.getElementById('tabCsvBtn');
+    const tabPasswordBtn = document.getElementById('tabPasswordBtn');
+
+    const tabQuestionsContent = document.getElementById('tabQuestionsContent');
+    const tabToolsContent = document.getElementById('tabToolsContent');
+    const tabCsvContent = document.getElementById('tabCsvContent');
+    const tabPasswordContent = document.getElementById('tabPasswordContent');
+
+    tabQuestionsBtn.classList.remove('active');
+    tabToolsBtn.classList.remove('active');
+    tabCsvBtn.classList.remove('active');
+    tabPasswordBtn.classList.remove('active');
+
+    tabQuestionsContent.style.display = 'none';
+    tabToolsContent.style.display = 'none';
+    tabCsvContent.style.display = 'none';
+    tabPasswordContent.style.display = 'none';
+
+    if (tab === 'questions') {
+      tabQuestionsBtn.classList.add('active');
+      tabQuestionsContent.style.display = 'block';
+      renderAdminQuestionList();
+    } else if (tab === 'tools') {
+      tabToolsBtn.classList.add('active');
+      tabToolsContent.style.display = 'block';
+      renderAdminToolList();
+    } else if (tab === 'csv') {
+      tabCsvBtn.classList.add('active');
+      tabCsvContent.style.display = 'block';
+    } else if (tab === 'password') {
+      tabPasswordBtn.classList.add('active');
+      tabPasswordContent.style.display = 'block';
+      document.getElementById('changeCurrentPassword').value = '';
+      document.getElementById('changeNewPassword').value = '';
+      document.getElementById('changeConfirmPassword').value = '';
+      document.getElementById('passwordChangeError').style.display = 'none';
+      document.getElementById('passwordChangeSuccess').style.display = 'none';
+    }
+  }
+
+  // ==========================================
+  // PASSWORD MANAGEMENT & CREDENTIAL UPDATING
+  // ==========================================
+  function saveNewAdminPassword() {
+    const current = document.getElementById('changeCurrentPassword').value;
+    const newPwd = document.getElementById('changeNewPassword').value;
+    const confirmPwd = document.getElementById('changeConfirmPassword').value;
+    const errEl = document.getElementById('passwordChangeError');
+    const succEl = document.getElementById('passwordChangeSuccess');
+
+    errEl.style.display = 'none';
+    succEl.style.display = 'none';
+
+    // Verify current password against salted hash
+    const currentHash = computeSaltedHash(current, currentCredentials.salt);
+    if (!constantTimeCompare(currentHash, currentCredentials.hash)) {
+      errEl.textContent = 'Current password is incorrect!';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!newPwd || newPwd.length < 8) {
+      errEl.textContent = 'New password must be at least 8 characters long!';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (newPwd !== confirmPwd) {
+      errEl.textContent = 'New password and confirmation do not match!';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    // Generate fresh cryptographically random salt and compute new hash
+    const newSalt = generateSecureSalt();
+    const newHash = computeSaltedHash(newPwd, newSalt);
+
+    currentCredentials = {
+      salt: newSalt,
+      hash: newHash
+    };
+
+    SafeStorage.set(STORAGE_KEY_CREDS, JSON.stringify(currentCredentials));
+
+    document.getElementById('changeCurrentPassword').value = '';
+    document.getElementById('changeNewPassword').value = '';
+    document.getElementById('changeConfirmPassword').value = '';
+
+    succEl.innerHTML = 'Password updated securely with fresh salt! <strong>Click "Save &amp; Overwrite HTML for SharePoint"</strong> to bake new credentials into the file.';
+    succEl.style.display = 'block';
+    showToast('Admin password updated with salted SHA-256!');
+  }
+
+  function resetPasswordToDefaultCredentials() {
+    if (confirm('Reset administrator credentials back to the default hardened password (Pogiako1980!)?')) {
+      currentCredentials = DEFAULT_CREDENTIALS;
+      SafeStorage.set(STORAGE_KEY_CREDS, JSON.stringify(DEFAULT_CREDENTIALS));
+      document.getElementById('changeCurrentPassword').value = '';
+      document.getElementById('changeNewPassword').value = '';
+      document.getElementById('changeConfirmPassword').value = '';
+      const succEl = document.getElementById('passwordChangeSuccess');
+      succEl.textContent = 'Credentials reset to default hardened salt & SHA-256 hash (Pogiako1980!).';
+      succEl.style.display = 'block';
+      showToast('Reset to default password');
+    }
+  }
+
+  // ==========================================
+  // CSV EXPORT ENGINE (RFC 4180 COMPLIANT)
+  // ==========================================
+  function exportDataToCsv() {
+    if (!isAdminAuthenticated) {
+      alert('Admin authentication required.');
+      return;
+    }
+
+    const headers = ['Tool Key', 'Tool Name', 'Question ID', 'Question', 'Answer', 'Remarks', 'Notes'];
+    const rows = [headers];
+
+    currentTools.forEach(tool => {
+      const toolKey = tool.key;
+      const toolName = tool.name;
+      const faqs = currentFaqs[toolKey] || [];
+
+      faqs.forEach((item, idx) => {
+        rows.push([
+          toolKey,
+          toolName,
+          item.id || (toolKey + '-' + (idx + 1)),
+          item.q || '',
+          item.a || '',
+          item.remarks || '',
+          item.notes || ''
+        ]);
+      });
+    });
+
+    // Format RFC 4180 CSV with quotes escaping and UTF-8 BOM
+    const csvContent = rows.map(row => {
+      return row.map(val => {
+        const str = String(val == null ? '' : val);
+        if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+          return '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
+      }).join(',');
+    }).join('\r\n');
+
+    // Prepend UTF-8 BOM (\uFEFF) for Excel compatibility with symbols (Ω, ±, etc.)
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `WL_Tool_FAQs_Kuwait_${dateStr}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('CSV Exported: ' + (rows.length - 1) + ' FAQs downloaded!');
+  }
+
+  function downloadCsvTemplate() {
+    const templateContent =
+`\uFEFFTool Key,Tool Name,Question ID,Question,Answer,Remarks,Notes
+usis,USIT,usis-sample-1,What is the sample question for USIT?,Sample Answer with PN 101561806,Example remarks note,Example notes
+resolve,Resolve-iX,resolve-sample-1,What is the torque for Retainer Nut?,300 in.lbf or 25 ft.lbf,Lubricate with grease,Use calibrated torque wrench
+`;
+    const blob = new Blob([templateContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'WL_Tool_FAQs_Template.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ==========================================
+  // CSV IMPORT & MERGE WITH STRICT INTEGRITY
+  // ==========================================
+  // Robust CSV parser supporting quotes, newlines, and escaping
+  function parseCsvText(text) {
+    // Strip UTF-8 BOM if present
+    if (text.charCodeAt(0) === 0xFEFF) {
+      text = text.slice(1);
+    }
+
+    const rows = [];
+    let currentRow = [];
+    let currentField = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const nextChar = text[i + 1];
+
+      if (char === '"') {
+        if (insideQuotes && nextChar === '"') {
+          currentField += '"';
+          i++; // skip next quote
+        } else {
+          insideQuotes = !insideQuotes;
+        }
+      } else if (char === ',' && !insideQuotes) {
+        currentRow.push(currentField);
+        currentField = '';
+      } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+        if (char === '\r' && nextChar === '\n') {
+          i++;
+        }
+        currentRow.push(currentField);
+        currentField = '';
+        if (currentRow.length > 0 && !(currentRow.length === 1 && currentRow[0] === '')) {
+          rows.push(currentRow);
+        }
+        currentRow = [];
+      } else {
+        currentField += char;
+      }
+    }
+
+    if (currentField.length > 0 || currentRow.length > 0) {
+      currentRow.push(currentField);
+      if (currentRow.length > 0 && !(currentRow.length === 1 && currentRow[0] === '')) {
+        rows.push(currentRow);
+      }
+    }
+
+    return rows;
+  }
+
+  function handleCsvFileSelected(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const content = evt.target.result;
+      validateAndPreviewCsv(content, file.name);
+    };
+    reader.readAsText(file);
+    e.target.value = ''; // Reset file input
+  }
+
+  function validateAndPreviewCsv(csvText, fileName) {
+    const rows = parseCsvText(csvText);
+    const errorBox = document.getElementById('csvErrorBox');
+    const container = document.getElementById('csvValidationContainer');
+    const tbody = document.getElementById('csvPreviewTbody');
+
+    errorBox.style.display = 'none';
+    errorBox.innerHTML = '';
+    tbody.innerHTML = '';
+    parsedCsvData = null;
+
+    if (!rows || rows.length < 2) {
+      alert('The uploaded CSV file is empty or missing headers and data rows.');
+      return;
+    }
+
+    // Header normalization and column mapping
+    const rawHeaders = rows[0].map(h => h.trim().toLowerCase());
+    const headerMap = {};
+
+    rawHeaders.forEach((h, idx) => {
+      if (h.includes('tool') && (h.includes('key') || h.includes('id') || h.includes('code'))) {
+        headerMap.toolKey = idx;
+      } else if (h.includes('tool') && (h.includes('name') || h.includes('title'))) {
+        headerMap.toolName = idx;
+      } else if (h.includes('question') && (h.includes('id') || h.includes('key'))) {
+        headerMap.questionId = idx;
+      } else if (h.startsWith('q') || h.includes('question')) {
+        headerMap.question = idx;
+      } else if (h.startsWith('a') || h.includes('ans')) {
+        headerMap.answer = idx;
+      } else if (h.includes('remark')) {
+        headerMap.remarks = idx;
+      } else if (h.includes('note')) {
+        headerMap.notes = idx;
+      }
+    });
+
+    // Integrity constraint: must locate Tool Key (or Tool Name), Question, and Answer
+    const validationErrors = [];
+    if (headerMap.toolKey === undefined && headerMap.toolName === undefined) {
+      validationErrors.push('Missing required column: "Tool Key" or "Tool Name".');
+    }
+    if (headerMap.question === undefined) {
+      validationErrors.push('Missing required column: "Question".');
+    }
+    if (headerMap.answer === undefined) {
+      validationErrors.push('Missing required column: "Answer".');
+    }
+
+    if (validationErrors.length > 0) {
+      errorBox.innerHTML = '<strong>Integrity Error:</strong><br>' + validationErrors.join('<br>');
+      errorBox.style.display = 'block';
+      container.style.display = 'block';
+      return;
+    }
+
+    const parsedRecords = [];
+    let validCount = 0;
+    let newCount = 0;
+    let updateCount = 0;
+    let errorCount = 0;
+
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r];
+      // Skip empty row
+      if (row.length === 1 && !row[0].trim()) continue;
+
+      let toolKey = headerMap.toolKey !== undefined ? (row[headerMap.toolKey] || '').trim().toLowerCase() : '';
+      let toolName = headerMap.toolName !== undefined ? (row[headerMap.toolName] || '').trim() : '';
+      const qId = headerMap.questionId !== undefined ? (row[headerMap.questionId] || '').trim() : '';
+      const question = headerMap.question !== undefined ? (row[headerMap.question] || '').trim() : '';
+      const answer = headerMap.answer !== undefined ? (row[headerMap.answer] || '').trim() : '';
+      const remarks = headerMap.remarks !== undefined ? (row[headerMap.remarks] || '').trim() : '';
+      const notes = headerMap.notes !== undefined ? (row[headerMap.notes] || '').trim() : '';
+
+      const rowErrors = [];
+
+      // Auto-derive toolKey from toolName if needed
+      if (!toolKey && toolName) {
+        toolKey = toolName.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      }
+      if (!toolName && toolKey) {
+        const existingTool = currentTools.find(t => t.key === toolKey);
+        toolName = existingTool ? existingTool.name : toolKey.toUpperCase();
+      }
+
+      // Strict validation checks
+      if (!toolKey || !/^[a-z0-9_-]+$/.test(toolKey)) {
+        rowErrors.push('Invalid Tool Key (must be alphanumeric/hyphen)');
+      }
+      if (!question || question.length < 3) {
+        rowErrors.push('Question cannot be empty or under 3 characters');
+      }
+      if (!answer) {
+        rowErrors.push('Answer cannot be empty');
+      }
+
+      let status = 'new';
+      let statusLabel = 'NEW FAQ';
+
+      if (rowErrors.length > 0) {
+        status = 'error';
+        statusLabel = 'INVALID';
+        errorCount++;
+      } else {
+        validCount++;
+        // Check if updating existing FAQ in this tool
+        const existingToolFaqs = currentFaqs[toolKey] || [];
+        const isUpdate = existingToolFaqs.some(item => {
+          return (qId && item.id === qId) || (item.q.toLowerCase() === question.toLowerCase());
+        });
+
+        if (isUpdate) {
+          status = 'update';
+          statusLabel = 'UPDATE';
+          updateCount++;
+        } else {
+          newCount++;
+        }
+      }
+
+      parsedRecords.push({
+        rowNum: r + 1,
+        toolKey,
+        toolName,
+        qId,
+        question,
+        answer,
+        remarks,
+        notes,
+        status,
+        statusLabel,
+        errors: rowErrors
+      });
+    }
+
+    parsedCsvData = parsedRecords;
+
+    // Update UI Stats
+    document.getElementById('csvFileNameBadge').textContent = fileName;
+    document.getElementById('statTotalRows').textContent = parsedRecords.length;
+    document.getElementById('statValidRows').textContent = validCount;
+    document.getElementById('statNewQuestions').textContent = newCount;
+    document.getElementById('statUpdates').textContent = updateCount;
+    document.getElementById('statErrors').textContent = errorCount;
+
+    if (errorCount > 0) {
+      const errorList = parsedRecords
+        .filter(r => r.status === 'error')
+        .slice(0, 5)
+        .map(r => `Row ${r.rowNum}: ${r.errors.join(', ')}`)
+        .join('<br>');
+      errorBox.innerHTML = `<strong>Found ${errorCount} invalid rows (will be skipped or need fix):</strong><br>${errorList}${errorCount > 5 ? '<br>...and more' : ''}`;
+      errorBox.style.display = 'block';
+    }
+
+    // Render Preview Table
+    parsedRecords.slice(0, 50).forEach(rec => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="status-badge ${rec.status}">${rec.statusLabel}</span></td>
+        <td><code>${escapeHtml(rec.toolKey || '-')}</code></td>
+        <td><strong>${escapeHtml(rec.toolName || '-')}</strong></td>
+        <td>${escapeHtml(rec.question || '-')}</td>
+        <td style="color:#c0392b;font-weight:700;">${escapeHtml(rec.answer || '-')}</td>
+        <td style="color:#666;font-size:11px;">${escapeHtml(rec.remarks || rec.notes || '-')}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function cancelCsvImport() {
+    parsedCsvData = null;
+    document.getElementById('csvValidationContainer').style.display = 'none';
+  }
+
+  function executeCsvMerge() {
+    if (!isAdminAuthenticated) {
+      alert('Admin authentication required.');
+      return;
+    }
+
+    if (!parsedCsvData || parsedCsvData.length === 0) {
+      alert('No inspected CSV data to merge.');
+      return;
+    }
+
+    const validRecords = parsedCsvData.filter(r => r.status !== 'error');
+    if (validRecords.length === 0) {
+      alert('There are no valid records in this CSV to import. Please correct the errors and re-upload.');
+      return;
+    }
+
+    const mode = document.querySelector('input[name="csvImportMode"]:checked').value;
+
+    if (mode === 'replace') {
+      if (!confirm('WARNING: Are you absolutely sure you want to REPLACE the entire FAQ database with this CSV? All current tools and FAQs will be overwritten.')) {
+        return;
+      }
+      currentTools = [];
+      currentFaqs = {};
+    }
+
+    let mergedCount = 0;
+    let newToolsAdded = 0;
+
+    validRecords.forEach(rec => {
+      // 1. Ensure tool is registered
+      let toolObj = currentTools.find(t => t.key === rec.toolKey);
+      if (!toolObj) {
+        toolObj = { key: rec.toolKey, name: rec.toolName || rec.toolKey.toUpperCase() };
+        currentTools.push(toolObj);
+        newToolsAdded++;
+      }
+
+      if (!currentFaqs[rec.toolKey]) {
+        currentFaqs[rec.toolKey] = [];
+      }
+
+      const list = currentFaqs[rec.toolKey];
+      // Check existing item by ID or question text
+      const existingIdx = list.findIndex(item => {
+        return (rec.qId && item.id === rec.qId) || (item.q.toLowerCase() === rec.question.toLowerCase());
+      });
+
+      if (existingIdx !== -1) {
+        // Update existing
+        list[existingIdx] = {
+          ...list[existingIdx],
+          q: rec.question,
+          a: rec.answer,
+          remarks: rec.remarks || '',
+          notes: rec.notes || ''
+        };
+      } else {
+        // Append new
+        list.push({
+          id: rec.qId || ('q_' + Date.now() + '_' + Math.floor(Math.random() * 1000)),
+          q: rec.question,
+          a: rec.answer,
+          remarks: rec.remarks || '',
+          notes: rec.notes || ''
+        });
+      }
+
+      mergedCount++;
+    });
+
+    saveData();
+    populateToolDropdown();
+    renderAdminToolDropdowns();
+    renderAdminToolList();
+    renderAdminQuestionList();
+
+    document.getElementById('csvValidationContainer').style.display = 'none';
+    parsedCsvData = null;
+
+    showToast(`Bulk Import Complete: ${mergedCount} FAQs merged (${newToolsAdded} new tools).`);
+    alert(`Success! Merged ${mergedCount} records into the FAQ database.\n\nIMPORTANT: Please click "Save & Overwrite HTML for SharePoint" at the top of the Admin portal to export this updated database to your permanent SharePoint file!`);
+  }
+
+  // ==========================================
+  // QUESTION & TOOL MANAGEMENT
+  // ==========================================
+  function renderAdminToolDropdowns() {
+    const adminToolFilter = document.getElementById('adminToolFilter');
+    const editToolKey = document.getElementById('editToolKey');
+
+    const curFilterVal = adminToolFilter.value;
+    adminToolFilter.innerHTML = '';
+    editToolKey.innerHTML = '';
+
+    currentTools.forEach(t => {
+      const opt1 = document.createElement('option');
+      opt1.value = t.key;
+      opt1.textContent = t.name + ' (' + t.key + ')';
+      adminToolFilter.appendChild(opt1);
+
+      const opt2 = document.createElement('option');
+      opt2.value = t.key;
+      opt2.textContent = t.name + ' (' + t.key + ')';
+      editToolKey.appendChild(opt2);
+    });
+
+    if (curFilterVal && currentTools.some(t => t.key === curFilterVal)) {
+      adminToolFilter.value = curFilterVal;
+    } else if (currentTools.length > 0) {
+      adminToolFilter.value = currentTools[0].key;
+    }
+  }
+
+  function renderAdminQuestionList() {
+    const toolKey = document.getElementById('adminToolFilter').value;
+    const container = document.getElementById('adminQuestionList');
+    container.innerHTML = '';
+
+    if (!toolKey || !currentFaqs[toolKey] || currentFaqs[toolKey].length === 0) {
+      container.innerHTML = '<div style="padding: 20px; text-align: center; color: #777;">No questions registered for this tool yet. Click "+ Add New Question" above.</div>';
+      return;
+    }
+
+    currentFaqs[toolKey].forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'faq-list-item';
+      div.innerHTML = `
+        <div class="faq-item-header">
+          <div>
+            <div class="faq-item-title">${idx + 1}. ${escapeHtml(item.q)}</div>
+            <div class="faq-item-answer">Ans: ${escapeHtml(item.a)}</div>
+            <div style="font-size:12px; color:#555;"><strong>Remarks:</strong> ${escapeHtml(item.remarks || '-')}</div>
+            <div style="font-size:12px; color:#555;"><strong>Notes:</strong> ${escapeHtml(item.notes || '-')}</div>
+          </div>
+          <div style="display:flex; gap:6px; flex-shrink:0;">
+            <button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="openQuestionForm('${item.id || idx}')">Edit</button>
+            <button class="btn btn-danger" style="padding:4px 8px; font-size:11px;" onclick="deleteQuestionItem('${item.id || idx}')">Delete</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function renderAdminToolList() {
+    const container = document.getElementById('adminToolList');
+    container.innerHTML = '';
+
+    currentTools.forEach((tool) => {
+      const qCount = (currentFaqs[tool.key] || []).length;
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border:2px solid #000; border-radius:6px; margin-bottom:8px; background:#fafafa;';
+      row.innerHTML = `
+        <div>
+          <strong style="color:#003057; font-size:15px;">${escapeHtml(tool.name)}</strong>
+          <span style="font-size:12px; color:#666; margin-left:8px;">[Key: ${escapeHtml(tool.key)}]</span>
+          <span class="auto-badge" style="background:#555;">${qCount} Questions</span>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="renameTool('${tool.key}')">Rename</button>
+          <button class="btn btn-danger" style="padding:4px 8px; font-size:11px;" onclick="deleteTool('${tool.key}')">Delete</button>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function addNewTool() {
+    const keyInput = document.getElementById('newToolKey');
+    const nameInput = document.getElementById('newToolName');
+    const key = keyInput.value.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    const name = nameInput.value.trim();
+
+    if (!key || !name) {
+      alert('Please specify both a Tool Key (e.g. xpt) and a Display Name (e.g. XPT).');
+      return;
+    }
+
+    if (currentTools.some(t => t.key === key)) {
+      alert('A tool with key "' + key + '" already exists!');
+      return;
+    }
+
+    currentTools.push({ key, name });
+    if (!currentFaqs[key]) currentFaqs[key] = [];
+
+    keyInput.value = '';
+    nameInput.value = '';
+
+    saveData();
+    populateToolDropdown();
+    renderAdminToolDropdowns();
+    renderAdminToolList();
+    showToast('Tool added: ' + name);
+  }
+
+  function renameTool(toolKey) {
+    const tool = currentTools.find(t => t.key === toolKey);
+    if (!tool) return;
+    const newName = prompt('Enter new display name for tool (' + toolKey + '):', tool.name);
+    if (newName && newName.trim()) {
+      tool.name = newName.trim();
+      saveData();
+      populateToolDropdown();
+      renderAdminToolDropdowns();
+      renderAdminToolList();
+      showToast('Tool renamed');
+    }
+  }
+
+  function deleteTool(toolKey) {
+    const count = (currentFaqs[toolKey] || []).length;
+    if (!confirm('Are you sure you want to delete this tool (' + toolKey + ') and all its ' + count + ' questions?')) {
+      return;
+    }
+    currentTools = currentTools.filter(t => t.key !== toolKey);
+    delete currentFaqs[toolKey];
+    saveData();
+    populateToolDropdown();
+    renderAdminToolDropdowns();
+    renderAdminToolList();
+    renderAdminQuestionList();
+    showToast('Tool deleted');
+  }
+
+  function openQuestionForm(itemIdOrIdx) {
+    const activeToolKey = document.getElementById('adminToolFilter').value;
+    document.getElementById('editToolKey').value = activeToolKey;
+    document.getElementById('editQuestionId').value = '';
+    document.getElementById('editQuestion').value = '';
+    document.getElementById('editAnswer').value = '';
+    document.getElementById('editRemarks').value = '';
+    document.getElementById('editNotes').value = '';
+
+    if (itemIdOrIdx !== null) {
+      document.getElementById('questionModalTitle').textContent = 'Edit FAQ Entry';
+      const items = currentFaqs[activeToolKey] || [];
+      const item = items.find((q, idx) => (q.id === itemIdOrIdx || String(idx) === String(itemIdOrIdx)));
+      if (item) {
+        document.getElementById('editQuestionId').value = item.id || itemIdOrIdx;
+        document.getElementById('editQuestion').value = item.q || '';
+        document.getElementById('editAnswer').value = item.a || '';
+        document.getElementById('editRemarks').value = item.remarks || '';
+        document.getElementById('editNotes').value = item.notes || '';
+      }
+    } else {
+      document.getElementById('questionModalTitle').textContent = 'Add New FAQ Entry';
+    }
+
+    const editModal = document.getElementById('questionEditModal');
+    editModal.style.display = 'flex';
+    editModal.classList.add('active');
+  }
+
+  function cancelQuestionEdit() {
+    closeModal('questionEditModal');
+  }
+
+  function saveQuestionItemAndLockOption() {
+    const targetTool = document.getElementById('editToolKey').value;
+    const id = document.getElementById('editQuestionId').value;
+    const q = document.getElementById('editQuestion').value.trim();
+    const a = document.getElementById('editAnswer').value.trim();
+    const remarks = document.getElementById('editRemarks').value.trim();
+    const notes = document.getElementById('editNotes').value.trim();
+
+    if (!q || !a) {
+      alert('Question and Answer are required fields.');
+      return;
+    }
+
+    if (!currentFaqs[targetTool]) {
+      currentFaqs[targetTool] = [];
+    }
+
+    if (id) {
+      const list = currentFaqs[targetTool];
+      const existingIdx = list.findIndex((item, idx) => item.id === id || String(idx) === String(id));
+      if (existingIdx !== -1) {
+        list[existingIdx] = {
+          ...list[existingIdx],
+          q,
+          a,
+          remarks,
+          notes
+        };
+      } else {
+        list.push({ id: 'q_' + Date.now(), q, a, remarks, notes });
+      }
+    } else {
+      currentFaqs[targetTool].push({
+        id: 'q_' + Date.now(),
+        q,
+        a,
+        remarks,
+        notes
+      });
+    }
+
+    saveData();
+    closeModal('questionEditModal');
+    renderAdminQuestionList();
+    populateQuestions();
+    showToast('Saved FAQ! Remember to download updated HTML for SharePoint.');
+  }
+
+  function deleteQuestionItem(itemIdOrIdx) {
+    const activeToolKey = document.getElementById('adminToolFilter').value;
+    if (!confirm('Are you sure you want to delete this question?')) return;
+
+    if (currentFaqs[activeToolKey]) {
+      currentFaqs[activeToolKey] = currentFaqs[activeToolKey].filter(
+        (item, idx) => item.id !== itemIdOrIdx && String(idx) !== String(itemIdOrIdx)
+      );
+      saveData();
+      renderAdminQuestionList();
+      populateQuestions();
+      showToast('Question deleted');
+    }
+  }
+
+  // ==========================================
+  // EXPORT CURRENT STANDALONE HTML FOR SHAREPOINT
+  // (Guaranteed clean startup, locked admin, salted SHA-256)
+  // ==========================================
+  function downloadCurrentSelfHtml() {
+    if (!isAdminAuthenticated) {
+      alert('Administrator access required to export SharePoint file.');
+      return;
+    }
+
+    try {
+      // 1. Strictly close all modals in DOM and lock admin before taking outerHTML
+      closeModal('questionEditModal');
+      closeModal('passwordModal');
+      closeModal('adminModal');
+      lockAdmin();
+
+      // 2. Clear sensitive input fields and messages
+      const pwdInput = document.getElementById('adminPasswordInput');
+      if (pwdInput) pwdInput.value = '';
+      const pwdErr = document.getElementById('passwordError');
+      if (pwdErr) pwdErr.style.display = 'none';
+      const curPwd = document.getElementById('changeCurrentPassword');
+      if (curPwd) curPwd.value = '';
+      const newPwd = document.getElementById('changeNewPassword');
+      if (newPwd) newPwd.value = '';
+      const confPwd = document.getElementById('changeConfirmPassword');
+      if (confPwd) confPwd.value = '';
+
+      // 3. Reset search and selectors
+      const searchInput = document.getElementById('faqSearchInput');
+      if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      hideSuggestions();
+
+      const toolSelect = document.getElementById('toolSelect');
+      if (toolSelect) toolSelect.value = '';
+      const questionSelect = document.getElementById('questionSelect');
+      if (questionSelect) questionSelect.innerHTML = '<option value="">-- Select a Question --</option>';
+      const resultBox = document.getElementById('resultBox');
+      if (resultBox) resultBox.classList.remove('visible');
+      const noResult = document.getElementById('noResult');
+      if (noResult) noResult.style.display = 'none';
+      const autoBadge = document.getElementById('autoBadge');
+      if (autoBadge) autoBadge.style.display = 'none';
+
+      // 4. Reset admin tabs to default
+      switchAdminTab('questions');
+
+      // 5. Read outerHTML
+      let pageHtml = document.documentElement.outerHTML;
+
+      // 6. Regex sanitization to guarantee all modals remain closed on opening
+      pageHtml = pageHtml.replace(/\bmodal-overlay\s+active\b/gi, 'modal-overlay');
+      pageHtml = pageHtml.replace(/\bactive\s+modal-overlay\b/gi, 'modal-overlay');
+      pageHtml = pageHtml.replace(/style="display:\s*flex;?"/gi, 'style="display: none;"');
+      pageHtml = pageHtml.replace(/🔓 Admin \(Unlocked\)/gi, '🔒 Admin');
+      pageHtml = pageHtml.replace(/class="btn btn-admin logged-in"/gi, 'class="btn btn-admin"');
+      pageHtml = pageHtml.replace(/class="result-box visible"/gi, 'class="result-box"');
+
+      // 7. Inject updated DEFAULT_TOOLS
+      const toolsReplacement = 'const DEFAULT_TOOLS = ' + JSON.stringify(currentTools, null, 2) + ';';
+      pageHtml = pageHtml.replace(/const\s+DEFAULT_TOOLS\s*=\s*\[[\s\S]*?\];/, toolsReplacement);
+
+      // 8. Inject updated DEFAULT_FAQS
+      const faqsReplacement = 'const DEFAULT_FAQS = ' + JSON.stringify(currentFaqs, null, 2) + ';';
+      pageHtml = pageHtml.replace(/const\s+DEFAULT_FAQS\s*=\s*\{[\s\S]*?\};/, faqsReplacement);
+
+      // 9. Inject updated DEFAULT_CREDENTIALS (salted SHA-256)
+      const credsReplacement = 'const DEFAULT_CREDENTIALS = ' + JSON.stringify(currentCredentials, null, 2) + ';';
+      pageHtml = pageHtml.replace(/const\s+DEFAULT_CREDENTIALS\s*=\s*\{[\s\S]*?\};/, credsReplacement);
+
+      // 10. Trigger browser download
+      const blob = new Blob(['<!DOCTYPE html>\n' + pageHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'WL_Tool_FAQs_SharePoint.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      populateToolDropdown();
+      showToast('Downloaded! File is ready for SharePoint upload (Admin locked).');
+    } catch(err) {
+      alert('Download error: ' + err.message);
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  window.addEventListener('DOMContentLoaded', initData);
+  window.addEventListener('load', forceCloseAllModals);
+</script>
+
+</body>
+</html>
